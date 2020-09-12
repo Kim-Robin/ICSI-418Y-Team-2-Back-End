@@ -32,12 +32,12 @@ public class DemoController {
     }
 
     @PutMapping("/updateUser")
-    public String putExample(@RequestBody Person person){
-        return "Updated user " + person.getName();
+    public String putExample(@RequestBody Person person) throws InterruptedException, ExecutionException{
+        return fireBaseService.updateUserDetails(person);
     }
 
     @DeleteMapping("/deleteUser")
     public String deleteExample(@RequestHeader String name){
-        return "Deleted user " + name;
+        return fireBaseService.deleteUser(name);
     }
 }

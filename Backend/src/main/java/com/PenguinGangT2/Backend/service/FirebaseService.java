@@ -37,4 +37,16 @@ public class FirebaseService {
             return null;
         }
     }
+
+    public String updateUserDetails(Person person) throws InterruptedException, ExecutionException{
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("user").document(person.getName()).set(person);
+        return collectionsApiFuture.get().getUpdateTime().toString();
+    }
+
+    public String deleteUser(String name){
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> writeResult = dbFirestore.collection("user").document(name).delete();
+        return "Document with ID" + name + "Has been deleted";
+    }
 }
