@@ -31,8 +31,8 @@ public class DemoApiController {
         Request request = new Request.Builder()
 	        .url("https://api-nba-v1.p.rapidapi.com/players/lastName/"+ lastName)
 	        .get()
-	        .addHeader("x-rapidapi-host", "api-nba-v1.p.rapidapi.com")
-	        .addHeader("x-rapidapi-key", "909e58b6e2msheb6f99c22fd8ac6p1235a7jsn4e3b46faea09")
+	        .addHeader("x-rapidapi-host", "")
+	        .addHeader("x-rapidapi-key", "")
             .build();
             
             Response response = null;
