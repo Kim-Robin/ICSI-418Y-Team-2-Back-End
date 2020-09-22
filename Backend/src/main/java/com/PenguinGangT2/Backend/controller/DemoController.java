@@ -14,15 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
+// @RequestMapping("/one")
 public class DemoController {
 
     @Autowired
     FirebaseService fireBaseService;
    
     @GetMapping("/getUserDetails")
-    public Person getExample(@RequestHeader() String name) throws InterruptedException, ExecutionException{
+    public Person getExample(@RequestHeader String name) throws InterruptedException, ExecutionException{
         return fireBaseService.getUserDetails(name);
     }
 
