@@ -1,10 +1,12 @@
 package com.PenguinGangT2.Backend.models;
 
 import java.util.Collection;
+import java.util.Date;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.google.firebase.database.annotations.NotNull;
+
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,7 +21,13 @@ public class Tournaments {
     @Size(max = 100)
     private String tournamentName;
 
-    private Collection<String> registeredTeamId;
+    private Collection<String> registeredUserId;
+
+    @NotNull
+    private int participantLimit;
+
+    private Date date = new Date();
+
 
     public String getId(){
         return id;
@@ -33,12 +41,28 @@ public class Tournaments {
         this.tournamentName = tournamentName;
     }
 
-    public Collection<String> getRegisteredTeamId(){
-        return registeredTeamId;
+    public Collection<String> getRegisteredUserId(){
+        return registeredUserId;
     }
 
-    public void setRegisteredTeamId(Collection<String> registeredTeamId){
-        this.registeredTeamId = registeredTeamId;
+    public void setRegisteredTeamId(Collection<String> registeredUserId){
+        this.registeredUserId = registeredUserId;
+    }
+
+    public int getParticipantLimit(){
+        return participantLimit;
+    }
+
+    public void setParticipantLimit(int participantLimit){
+        this.participantLimit = participantLimit;
+    }
+
+    public Date getDate(){
+        return date;
+    }
+
+    public void setDate(Date date){
+        this.date = date;
     }
 
 
