@@ -57,7 +57,7 @@ public class User {
     public int getAccountPoint(){
         return accountPoints;
     }
-    public void setUsername(int accountPoints){
+    public void setAccountPoints(int accountPoints){
         this.accountPoints = accountPoints;
     }
 
