@@ -1,5 +1,7 @@
 package com.PenguinGangT2.Backend.models;
 
+import java.util.Collection;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -28,6 +30,8 @@ public class User {
 
     @NotBlank
     private int accountPoints;
+
+    private Collection<String> friends;
 
     public String getId(){
         return id;
@@ -60,6 +64,14 @@ public class User {
     public void setAccountPoints(int accountPoints){
         this.accountPoints = accountPoints;
     }
+
+    public Collection<String> getFriends(){
+        return friends;
+    }
+    public void setFriends(Collection<String> friends){
+        this.friends = friends;
+    }
+
 
     
 
