@@ -91,6 +91,8 @@ public class LoginController {
         StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
         String result = encoder.encode(user.getPassword());
         //
+        System.out.println(user.getFirstName());
+        System.out.println(user.getLastName());
         user.setPassword(result);
         Collection<String> friends = new ArrayList<>();
         user.setFriends(friends);
