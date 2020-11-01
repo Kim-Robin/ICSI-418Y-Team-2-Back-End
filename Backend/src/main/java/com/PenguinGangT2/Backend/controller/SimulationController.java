@@ -11,6 +11,7 @@ import com.PenguinGangT2.Backend.repository.TeamRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,8 @@ public class SimulationController {
     @Autowired
     private TeamRepository teamRepo;
 
-    @GetMapping("/match")
-    public void getScore(@RequestParam String id){
+    @GetMapping(value = "/{id}")
+    public void getScore(@PathVariable String id){
         Match simulMatch = matchRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
         
 
