@@ -52,7 +52,7 @@ public class MatchController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteTournaments(@PathVariable String id){
+    public void deleteMatch(@PathVariable String id){
         matchRepo.deleteById(id);
     }
 
