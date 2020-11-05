@@ -16,4 +16,10 @@ public class ChatController {
     public MessageModel sendMessage(@Payload MessageModel chatMessage){
         return chatMessage;
     }
+
+    @MessageMapping("/chat.send")
+    @SendTo("/topic/tournament")
+    public MessageModel sendMessageTournament(@Payload MessageModel chatMessage){
+        return chatMessage;
+    }
 }
