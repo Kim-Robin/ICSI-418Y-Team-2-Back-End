@@ -61,7 +61,8 @@ public class SimulationController {
         
         
         Random random = new Random();
-
+        int team1Score = 0;
+        int team2Score = 0;
 
         for(int i = 0; i < 96; i++){
             int randNum = random.nextInt(team1 + team2);
@@ -70,18 +71,25 @@ public class SimulationController {
                 int score = random.nextInt(10);
                 if(score > 6){
                     System.out.println("three point");
+                    team2Score += 3;
                 }else{
                     System.out.println("two points");
+                    team2Score += 2;
                 }
             }else{
                 System.out.println("team1 gets point");
                 int score = random.nextInt(10);
                 if(score > 6){
                     System.out.println("three point");
+                    team1Score += 3;
                 }else{
                     System.out.println("two points");
+                    team1Score += 2;
                 }
             }
         }
+
+
+        // return team1Scrore && team2Score
     }
 }
