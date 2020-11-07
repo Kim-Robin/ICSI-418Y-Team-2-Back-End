@@ -1,5 +1,6 @@
 package com.PenguinGangT2.Backend.controller;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -25,7 +26,7 @@ public class SimulationController {
     private TeamRepository teamRepo;
 
     @GetMapping(value = "/{id}")
-    public void getScore(@PathVariable String id){
+    public ArrayList<Integer> getScore(@PathVariable String id){
         Match simulMatch = matchRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
         
 
@@ -61,7 +62,8 @@ public class SimulationController {
         
         
         Random random = new Random();
-
+        int team1Score = 0;
+        int team2Score = 0;
 
         for(int i = 0; i < 96; i++){
             int randNum = random.nextInt(team1 + team2);
@@ -70,18 +72,27 @@ public class SimulationController {
                 int score = random.nextInt(10);
                 if(score > 6){
                     System.out.println("three point");
+                    team2Score += 3;
                 }else{
                     System.out.println("two points");
+                    team2Score += 2;
                 }
             }else{
                 System.out.println("team1 gets point");
                 int score = random.nextInt(10);
                 if(score > 6){
                     System.out.println("three point");
+                    team1Score += 3;
                 }else{
                     System.out.println("two points");
+                    team1Score += 2;
                 }
             }
         }
+
+        ArrayList<Integer> finalScore = new ArrayList<>();
+        finalScore.add(team1Score);
+        finalScore.add(team2Score);
+        return finalScore;
     }
 }
