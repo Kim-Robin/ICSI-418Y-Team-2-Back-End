@@ -31,12 +31,17 @@ public class MatchController {
         return matchRepo.findAll();
     }
 
+    @GetMapping(value = "/{id}")
+    public Match getMatch(@PathVariable String id){
+        return matchRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
+    }
+
     @PostMapping
     public Match postMatch(@Valid @RequestBody Match match){
         return matchRepo.save(match);
     }
 
-    @PutMapping(value = "{id}")
+    @PutMapping(value = "/{id}")
     public Match updateMatch(@RequestBody Match match, @PathVariable String id){
         Optional<Match> original = matchRepo.findById(id);
 
