@@ -28,7 +28,6 @@ public class SimulationController {
     @GetMapping(value = "/{id}")
     public ArrayList<Integer> getScore(@PathVariable String id){
         Match simulMatch = matchRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
-        
 
         Team teamFirst;
         Team teamSecond;
@@ -36,9 +35,11 @@ public class SimulationController {
 
         int team1 = 0;
         int team2 = 0;
+
         Iterator it = simulMatch.getTeamId().iterator();
         while(it.hasNext()){
-            System.out.println(it.next());
+            // System.out.println(it.next());
+
             if(k == 0){
                 teamFirst = teamRepo.findById((String) it.next()).orElseThrow(()-> new ResourceNotFoundException());
                 team1 = teamFirst.getPower();
@@ -48,6 +49,8 @@ public class SimulationController {
                 team2 = teamSecond.getPower();
             }
         }
+
+        
 
         // simulMatch.getTeamId().forEach(e -> {
         //     System.out.println(e);
@@ -67,29 +70,38 @@ public class SimulationController {
 
         for(int i = 0; i < 96; i++){
             int randNum = random.nextInt(team1 + team2);
+            System.out.println("rand: " + randNum);
+            System.out.println("team1: " + team1);
+            System.out.println("team2: " + team2);
             if(randNum + 1> team1){
-                System.out.println("team2 gets point");
+                // System.out.println("team2 gets point");
                 int score = random.nextInt(10);
                 if(score > 6){
-                    System.out.println("three point");
+                    // System.out.println("three point");
                     team2Score += 3;
                 }else{
-                    System.out.println("two points");
+                    // System.out.println("two points");
                     team2Score += 2;
                 }
             }else{
-                System.out.println("team1 gets point");
+                // System.out.println("team1 gets point");
                 int score = random.nextInt(10);
                 if(score > 6){
-                    System.out.println("three point");
+                    // System.out.println("three point");
                     team1Score += 3;
                 }else{
-                    System.out.println("two points");
+                    // System.out.println("two points");
                     team1Score += 2;
                 }
             }
         }
-
+        if(team1Score == team2Score){
+            if(team1 > team2){
+                team1Score++;
+            }else{
+                team2Score++;
+            }
+        }
         ArrayList<Integer> finalScore = new ArrayList<>();
         finalScore.add(team1Score);
         finalScore.add(team2Score);
