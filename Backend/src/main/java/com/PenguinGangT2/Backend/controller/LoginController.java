@@ -42,6 +42,7 @@ public class LoginController {
     public Map login(@RequestParam( name = "email") String email, @RequestParam(name = "password") String password) throws Exception{
 
         Map returnMap = new HashMap();
+        Map userMap = new HashMap();
         //System.out.println(userRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException()));
         User user = userRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException());
 
@@ -59,12 +60,13 @@ public class LoginController {
             final String jwt = jwtUtil.generateToken(userDetails);
             System.out.println(jwt);
             returnMap.put("JWTToken", jwt);
-            returnMap.put("username", user.getUsername());
-            returnMap.put("email", user.getEmail());
-            returnMap.put("firstName", user.getFirstName());
-            returnMap.put("lastName", user.getLastName());
-            returnMap.put("friendList", user.getFriends());
-            returnMap.put("accountPoints", user.getAccountPoint());
+            userMap.put("username", user.getUsername());
+            userMap.put("email", user.getEmail());
+            userMap.put("firstName", user.getFirstName());
+            userMap.put("lastName", user.getLastName());
+            userMap.put("friendList", user.getFriends());
+            userMap.put("accountPoints", user.getAccountPoint());
+            returnMap.put("user", userMap);
             return returnMap;
         }else{
             returnMap.put("status", 404);
@@ -95,6 +97,6 @@ public class LoginController {
 
         userRepo.save(user);
 
-        return ResponseEntity.ok("User registered! Welcome");
+        return ResponseEntity.ok("User registered!");
     }
 }
