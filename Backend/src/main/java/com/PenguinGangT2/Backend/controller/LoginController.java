@@ -1,8 +1,6 @@
 package com.PenguinGangT2.Backend.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import com.PenguinGangT2.Backend.exception.ResourceNotFoundException;
 import com.PenguinGangT2.Backend.models.User;
@@ -10,6 +8,7 @@ import com.PenguinGangT2.Backend.repository.UserRepository;
 import com.PenguinGangT2.Backend.service.MyUserDetailsService;
 import com.PenguinGangT2.Backend.util.JwtUtil;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,16 +18,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/login")
+@CrossOrigin(origins = "*")
 public class LoginController {
     @Autowired
     private UserRepository userRepo;
@@ -44,9 +39,12 @@ public class LoginController {
 
 
     @PostMapping("/signin")
-    public String login(@RequestParam( name = "email") String email, @RequestParam(name = "password") String password) throws Exception{
-        System.out.println(userRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException()));
+    public Map login(@RequestParam( name = "email") String email, @RequestParam(name = "password") String password) throws Exception{
+
+        Map returnMap = new HashMap();
+        //System.out.println(userRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException()));
         User user = userRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException());
+
         System.out.println(user.getPassword());
         System.out.println(user.getEmail());
         // StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
@@ -60,22 +58,18 @@ public class LoginController {
             final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
             final String jwt = jwtUtil.generateToken(userDetails);
             System.out.println(jwt);
-            return jwt;
+            returnMap.put("JWTToken", jwt);
+            returnMap.put("username", user.getUsername());
+            returnMap.put("email", user.getEmail());
+            returnMap.put("firstName", user.getFirstName());
+            returnMap.put("lastName", user.getLastName());
+            returnMap.put("friendList", user.getFriends());
+            returnMap.put("accountPoints", user.getAccountPoint());
+            return returnMap;
         }else{
-            // System.out.println("false");
-            // try{
-            //     authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), password));
-            // }catch(BadCredentialsException e){
-            //     System.out.println(e);
-            //     throw new Exception("Incorrect username or password", e);
-            // }
-            //     final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-            //     final String jwt = jwtUtil.generateToken(userDetails);
-            //     System.out.println(jwt);
-            //     return jwt;
-            return "False";
+            returnMap.put("status", 404);
+            return returnMap;
         }
-        
     }
 
     @PostMapping("signup")
