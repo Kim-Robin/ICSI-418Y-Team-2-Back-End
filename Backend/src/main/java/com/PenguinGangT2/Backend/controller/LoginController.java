@@ -91,12 +91,12 @@ public class LoginController {
 
     if (userRepo.existsByUsername(user.getUsername())) {
       hashmap.put("error", "Username is already taken!");
-      return ResponseEntity.badRequest().body(hashmap);
+      return ResponseEntity.ok().body(hashmap);
     }
 
     if (userRepo.existsByEmail(user.getEmail())) {
       hashmap.put("error", "Email is already taken!");
-      return ResponseEntity.badRequest().body(hashmap);
+      return ResponseEntity.ok().body(hashmap);
     }
 
     StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
@@ -106,7 +106,7 @@ public class LoginController {
     user.setFriends(friends);
     user.setAccountPoints(0);
     userRepo.save(user);
-    hashmap.put("message", "User has been created!");
+    hashmap.put("message", "Account has been created!");
     return ResponseEntity.ok().body(hashmap);
   }
 }
