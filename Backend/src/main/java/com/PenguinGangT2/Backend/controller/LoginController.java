@@ -93,6 +93,8 @@ public class LoginController {
         user.setPassword(result);
         Collection<String> friends = new ArrayList<>();
         user.setFriends(friends);
+        user.setGlobalTournamentId("");
+        user.setFriendTournamentId("");
         user.setAccountPoints(0);
 
         userRepo.save(user);

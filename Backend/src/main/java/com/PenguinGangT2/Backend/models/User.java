@@ -39,6 +39,10 @@ public class User {
 
     private Collection<String> friends;
 
+    private String globalTournamentId;
+
+    private String friendTournamentId;
+
     public String getId(){
         return id;
     }
@@ -93,6 +97,20 @@ public class User {
     }
     public void setFriends(Collection<String> friends){
         this.friends = friends;
+    }
+
+    public String getGlobalTournamentId(){
+        return globalTournamentId;
+    }
+    public void setGlobalTournamentId(String globalTournamentId){
+        this.globalTournamentId = globalTournamentId;
+    }
+
+    public String getFriendTournamentId(){
+        return friendTournamentId;
+    }
+    public void setFriendTournamentId(String friendTournamentId){
+        this.friendTournamentId = friendTournamentId;
     }
 
 
