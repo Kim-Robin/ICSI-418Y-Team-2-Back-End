@@ -84,29 +84,36 @@ public class LoginController {
       return ResponseEntity.badRequest().body(returnMap);
     }
   }
+  @PostMapping("signup")
+  public ResponseEntity<?> registerUser(@RequestBody User user){
+      Map hashmap = new HashMap();
 
-  @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@RequestBody User user) {
-    Map hashmap = new HashMap();
+      if (userRepo.existsByUsername(user.getUsername())) {
+          hashmap.put("error", "Username is already taken!");
+          return ResponseEntity.ok().body(hashmap);
+      }
 
-    if (userRepo.existsByUsername(user.getUsername())) {
-      hashmap.put("error", "Username is already taken!");
+      if (userRepo.existsByEmail(user.getEmail())) {
+        hashmap.put("error", "Email is already taken!");
+        return ResponseEntity.ok().body(hashmap);
+      }
+
+      // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+      StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
+      String result = encoder.encode(user.getPassword());
+      //
+      System.out.println(user.getFirstName());
+      System.out.println(user.getLastName());
+        
+      user.setPassword(result);
+      Collection<String> friends = new ArrayList<>();
+      user.setFriends(friends);
+      user.setGlobalTournamentId("");
+      user.setFriendTournamentId("");
+      user.setAccountPoints(0);
+
+      userRepo.save(user);
+      hashmap.put("message", "Account has been created!");
       return ResponseEntity.ok().body(hashmap);
-    }
-
-    if (userRepo.existsByEmail(user.getEmail())) {
-      hashmap.put("error", "Email is already taken!");
-      return ResponseEntity.ok().body(hashmap);
-    }
-
-    StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
-    String result = encoder.encode(user.getPassword());
-    user.setPassword(result);
-    Collection<String> friends = new ArrayList<>();
-    user.setFriends(friends);
-    user.setAccountPoints(0);
-    userRepo.save(user);
-    hashmap.put("message", "Account has been created!");
-    return ResponseEntity.ok().body(hashmap);
   }
 }
