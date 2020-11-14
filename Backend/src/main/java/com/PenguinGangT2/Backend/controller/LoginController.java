@@ -74,7 +74,7 @@ public class LoginController {
         userMap.put("lastName", user.getLastName());
         userMap.put("friendIDs", user.getFriendIDs());
         userMap.put("announcementIDs", user.getAnnouncementIDs());
-        userMap.put("matchIDs", user.getMatchIds());
+        userMap.put("matchIDs", user.getMatchIDs());
         userMap.put("tournament1Id", user.getTournament1Id());
         userMap.put("tournament2Id", user.getTournament2Id());
         userMap.put("accountPoints", user.getAccountPoint());
@@ -108,7 +108,7 @@ public class LoginController {
     StringBuilder salt = new StringBuilder();
     Random random = new Random();
     while (salt.length() < 16) {
-      int index = (int) (rnd.nextFloat() * saltChars.length());
+      int index = (int) (random.nextFloat() * saltChars.length());
       salt.append(saltChars.charAt(index));
     }
     String id = salt.toString();

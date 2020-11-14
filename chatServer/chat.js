@@ -10,6 +10,15 @@ io.on("connection", (client) => {
       text: payload.message,
     });
   });
+
+  client.on("send dm", (payload) => {
+    io.emit("dm message", {
+      sender: payload.sender,
+      date: new Date().toISOString(),
+      text: payload.message,
+      receiver: payload.receiver,
+    });
+  });
 });
 server.listen(3001, () => {
   console.log("Listening on port 3001");
