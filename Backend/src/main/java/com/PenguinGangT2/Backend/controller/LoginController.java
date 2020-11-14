@@ -67,11 +67,15 @@ public class LoginController {
         );
         final String jwt = jwtUtil.generateToken(userDetails);
         returnMap.put("JWTToken", jwt);
+        userMap.put("id", user.getUserId());
         userMap.put("username", user.getUsername());
         userMap.put("email", user.getEmail());
         userMap.put("firstName", user.getFirstName());
         userMap.put("lastName", user.getLastName());
-        userMap.put("friendList", user.getFriends());
+        userMap.put("friendIDs", user.getFriendIDs());
+        userMap.put("announcementIDs", user.getAnnouncementIDs());
+        userMap.put("matchIDs", user.getMatchIds());
+        userMap.put("tournament1Id", )
         userMap.put("accountPoints", user.getAccountPoint());
         returnMap.put("user", userMap);
         return ResponseEntity.ok().body(returnMap);
@@ -84,36 +88,50 @@ public class LoginController {
       return ResponseEntity.badRequest().body(returnMap);
     }
   }
-  @PostMapping("signup")
-  public ResponseEntity<?> registerUser(@RequestBody User user){
-      Map hashmap = new HashMap();
 
-      if (userRepo.existsByUsername(user.getUsername())) {
-          hashmap.put("error", "Username is already taken!");
-          return ResponseEntity.ok().body(hashmap);
-      }
+  @PostMapping("/signup")
+  public ResponseEntity<?> registerUser(@RequestBody User user) {
+    Map hashmap = new HashMap();
 
-      if (userRepo.existsByEmail(user.getEmail())) {
-        hashmap.put("error", "Email is already taken!");
-        return ResponseEntity.ok().body(hashmap);
-      }
-
-      // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-      StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
-      String result = encoder.encode(user.getPassword());
-      //
-      System.out.println(user.getFirstName());
-      System.out.println(user.getLastName());
-        
-      user.setPassword(result);
-      Collection<String> friends = new ArrayList<>();
-      user.setFriends(friends);
-      user.setGlobalTournamentId("");
-      user.setFriendTournamentId("");
-      user.setAccountPoints(0);
-
-      userRepo.save(user);
-      hashmap.put("message", "Account has been created!");
+    if (userRepo.existsByUsername(user.getUsername())) {
+      hashmap.put("error", "Username is already taken!");
       return ResponseEntity.ok().body(hashmap);
+    }
+
+    if (userRepo.existsByEmail(user.getEmail())) {
+      hashmap.put("error", "Email is already taken!");
+      return ResponseEntity.ok().body(hashmap);
+    }
+
+    String saltChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    StringBuilder salt = new StringBuilder();
+    Random random = new Random();
+    while (salt.length() < 16) {
+      int index = (int) (rnd.nextFloat() * saltChars.length());
+      salt.append(saltChars.charAt(index));
+    }
+    String id = salt.toString();
+
+    // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
+    String result = encoder.encode(user.getPassword());
+
+    Collection<String> friendIDs = new ArrayList<>();
+    Collection<String> matchIDs = new ArrayList<>();
+    Collection<String> announcementIDs = new ArrayList<>();
+
+    user.setID(id);
+    user.setProfileImageLink("none");
+    user.setPassword(result);
+    user.setFriends(friendIDs);
+    user.setAnnouncementIDs(announcementIDs);
+    user.setMatchIDs(matchIDs);
+    user.setTournament1Id("none");
+    user.setTournament2Id("none");
+    user.setAccountPoints(0);
+
+    userRepo.save(user);
+    hashmap.put("message", "Account has been created!");
+    return ResponseEntity.ok().body(hashmap);
   }
 }

@@ -1,121 +1,155 @@
 package com.PenguinGangT2.Backend.models;
 
 import java.util.Collection;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
 public class User {
 
-    @Id
-    private String id;
+  @Id
+  private String userId;
 
-    @NotBlank
-    @Size(max = 30)
-    private String username;
+  @NotBlank
+  @Size(max = 30)
+  private String username;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
+  @NotBlank
+  @Size(max = 50)
+  @Email
+  private String email;
 
-    @NotBlank
-    private String firstName;
+  @NotBlank
+  private String firstName;
 
-    @NotBlank
-    private String lastName;
+  @NotBlank
+  private String lastName;
 
-    @NotBlank
-    @Size(max = 40)
-    private String password;
+  @NotBlank
+  @Size(max = 40)
+  private String password;
 
-    @NotBlank
-    private int accountPoints;
+  @NotBlank
+  private int accountPoints;
 
-    private Collection<String> friends;
+  private String profileImageLink;
 
-    private String globalTournamentId;
+  private Collection<String> friendIDs;
 
-    private String friendTournamentId;
+  private Collection<String> matchIDs;
 
-    public String getId(){
-        return id;
-    }
-    public void setId(String id){
-        this.id = id;
-    }
+  private Collection<String> announcementIDs;
 
-    public String getUsername(){
-        return username;
-    }
-    public void setUsername(String username){
-        this.username = username;
-    }
+  private String tournament1Id;
 
-    public String getFirstName(){
-        return firstName;
-    }
-    public void setFirstName(String firstName){
-        this.firstName = firstName;
-    }
+  private String tournament2Id;
 
-    public String getLastName(){
-        return lastName;
-    }
-    public void setLastName(String lastName){
-        this.lastName = lastName;
-    }
+  public String getUserId() {
+    return userId;
+  }
 
-    public String getEmail(){
-        return email;
-    }
-    public void setEmail(String email){
-        this.email = email;
-    }
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
 
-    public String getPassword(){
-        return username;
-    }
-    public void setPassword(String password){
-        this.password = password;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public int getAccountPoint(){
-        return accountPoints;
-    }
-    public void setAccountPoints(int accountPoints){
-        this.accountPoints = accountPoints;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-    public Collection<String> getFriends(){
-        return friends;
-    }
-    public void setFriends(Collection<String> friends){
-        this.friends = friends;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public String getGlobalTournamentId(){
-        return globalTournamentId;
-    }
-    public void setGlobalTournamentId(String globalTournamentId){
-        this.globalTournamentId = globalTournamentId;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public String getFriendTournamentId(){
-        return friendTournamentId;
-    }
-    public void setFriendTournamentId(String friendTournamentId){
-        this.friendTournamentId = friendTournamentId;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    
+  public String getEmail() {
+    return email;
+  }
 
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    
+  public String getPassword() {
+    return username;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public int getAccountPoint() {
+    return accountPoints;
+  }
+
+  public void setAccountPoints(int accountPoints) {
+    this.accountPoints = accountPoints;
+  }
+
+  public Collection<String> getFriendIDs() {
+    return friendIDs;
+  }
+
+  public void setFriends(Collection<String> friendIDs) {
+    this.friendIDs = friendIDs;
+  }
+
+  //private Collection<String> matchIDs;
+
+  public Collection<String> getMatchIDs() {
+    return matchIDs;
+  }
+
+  public void setMatchIDs(Collection<String> matchIDs) {
+    this.matchIDs = matchIDs;
+  }
+
+  public Collection<String> getAnnouncementIDs() {
+    return announcementIDs;
+  }
+
+  public void setAnnouncementIDs(Collection<String> announcementIDs) {
+    this.announcementIDs = announcementIDs;
+  }
+
+  public String getTournament1Id() {
+    return tournament1Id;
+  }
+
+  public void setTournament1Id(String tournament1Id) {
+    this.tournament1Id = tournament1Id;
+  }
+
+  public String getTournament2Id() {
+    return tournament2Id;
+  }
+
+  public void setTournament2Id(String tournament2Id) {
+    this.tournament2Id = tournament2Id;
+  }
+}
+
+public String getProfileImageLink(){
+    return profileImageLink;
+}
+
+public void setProfileImageLink(String profileImageLink) {
+    this.profileImageLink = profileImageLink;
 }
