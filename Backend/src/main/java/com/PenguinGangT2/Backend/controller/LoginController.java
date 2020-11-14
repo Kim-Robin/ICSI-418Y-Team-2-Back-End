@@ -121,7 +121,7 @@ public class LoginController {
     Collection<String> matchIDs = new ArrayList<>();
     Collection<String> announcementIDs = new ArrayList<>();
 
-    user.setID(id);
+    user.setUserId(id);
     user.setProfileImageLink("none");
     user.setPassword(result);
     user.setFriends(friendIDs);
