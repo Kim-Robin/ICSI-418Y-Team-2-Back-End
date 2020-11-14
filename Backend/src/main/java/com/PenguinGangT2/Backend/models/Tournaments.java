@@ -2,72 +2,65 @@ package com.PenguinGangT2.Backend.models;
 
 import java.util.Collection;
 import java.util.Date;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "tournaments")
 public class Tournaments {
-    
-    @Id
-    private String id;
 
-    @NotNull
-    @Size(max = 100)
-    private String tournamentName;
+  @Id
+  private String id;
 
-    private Collection<String> registeredUserId;
+  @NotNull
+  @Size(max = 100)
+  private String tournamentName;
 
-    @NotNull
-    private int participantLimit;
+  private Collection<String> registeredUserId;
 
-    private Date date = new Date();
+  @NotNull
+  private int participantLimit;
 
+  private Date date = new Date();
 
-    public String getId(){
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setId(String id){
-        this.id = id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getTournamentName(){
-        return tournamentName;
-    }
+  public String getTournamentName() {
+    return tournamentName;
+  }
 
-    public void setTournametName(String tournamentName){
-        this.tournamentName = tournamentName;
-    }
+  public void setTournametName(String tournamentName) {
+    this.tournamentName = tournamentName;
+  }
 
-    public Collection<String> getRegisteredUserId(){
-        return registeredUserId;
-    }
+  public Collection<String> getRegisteredUserId() {
+    return registeredUserId;
+  }
 
-    public void setRegisteredTeamId(Collection<String> registeredUserId){
-        this.registeredUserId = registeredUserId;
-    }
+  public void setRegisteredTeamId(Collection<String> registeredUserId) {
+    this.registeredUserId = registeredUserId;
+  }
 
-    public int getParticipantLimit(){
-        return participantLimit;
-    }
+  public int getParticipantLimit() {
+    return participantLimit;
+  }
 
-    public void setParticipantLimit(int participantLimit){
-        this.participantLimit = participantLimit;
-    }
+  public void setParticipantLimit(int participantLimit) {
+    this.participantLimit = participantLimit;
+  }
 
-    public Date getDate(){
-        return date;
-    }
+  public Date getDate() {
+    return date;
+  }
 
-    public void setDate(Date date){
-        this.date = date;
-    }
-
-
+  public void setDate(Date date) {
+    this.date = date;
+  }
 }

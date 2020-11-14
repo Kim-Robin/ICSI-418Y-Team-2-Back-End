@@ -77,16 +77,18 @@ public class LoginController {
         userMap.put("matchIDs", user.getMatchIDs());
         userMap.put("tournament1Id", user.getTournament1Id());
         userMap.put("tournament2Id", user.getTournament2Id());
+        userMap.put("team1Id", user.getTeam1Id());
+        userMap.put("team2Id", user.getTeam2Id());
         userMap.put("accountPoints", user.getAccountPoint());
         returnMap.put("user", userMap);
         return ResponseEntity.ok().body(returnMap);
       } else {
         returnMap.put("error", "Incorrect password");
-        return ResponseEntity.badRequest().body(returnMap);
+        return ResponseEntity.ok().body(returnMap);
       }
     } else {
       returnMap.put("error", "There is no account with that email Address!");
-      return ResponseEntity.badRequest().body(returnMap);
+      return ResponseEntity.ok().body(returnMap);
     }
   }
 
@@ -129,6 +131,8 @@ public class LoginController {
     user.setMatchIDs(matchIDs);
     user.setTournament1Id("none");
     user.setTournament2Id("none");
+    user.setTeam1Id("none");
+    user.setTeam2Id("none");
     user.setAccountPoints(0);
 
     userRepo.save(user);

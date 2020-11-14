@@ -47,6 +47,10 @@ public class User {
 
   private String tournament2Id;
 
+  private String team1Id;
+
+  private String team2Id;
+
   public String getUserId() {
     return userId;
   }
@@ -143,13 +147,27 @@ public class User {
     this.tournament2Id = tournament2Id;
   }
 
-  public String getProfileImageLink(){
+  public String getProfileImageLink() {
     return profileImageLink;
   }
 
   public void setProfileImageLink(String profileImageLink) {
     this.profileImageLink = profileImageLink;
   }
+
+  public void getTeam1Id() {
+    return team1Id;
+  }
+
+  public void setTeam1Id(String team1Id) {
+    this.team1Id = team1Id;
+  }
+
+  public void getTeam2Id() {
+    return team2Id;
+  }
+
+  public void setTeam2Id(String team2Id) {
+    this.team2Id = team2Id;
+  }
 }
-
-
