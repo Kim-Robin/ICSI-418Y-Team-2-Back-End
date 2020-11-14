@@ -111,7 +111,7 @@ public class LoginController {
       int index = (int) (random.nextFloat() * saltChars.length());
       salt.append(saltChars.charAt(index));
     }
-    String id = salt.toString();
+    String userId = salt.toString();
 
     // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
@@ -121,7 +121,7 @@ public class LoginController {
     Collection<String> matchIDs = new ArrayList<>();
     Collection<String> announcementIDs = new ArrayList<>();
 
-    user.setUserId(id);
+    user.setUserId(userId);
     user.setProfileImageLink("none");
     user.setPassword(result);
     user.setFriendIDs(friendIDs);
