@@ -155,7 +155,7 @@ public class User {
     this.profileImageLink = profileImageLink;
   }
 
-  public void getTeam1Id() {
+  public String getTeam1Id() {
     return team1Id;
   }
 
@@ -163,7 +163,7 @@ public class User {
     this.team1Id = team1Id;
   }
 
-  public void getTeam2Id() {
+  public String getTeam2Id() {
     return team2Id;
   }
 
