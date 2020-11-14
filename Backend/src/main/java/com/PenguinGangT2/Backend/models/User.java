@@ -107,11 +107,9 @@ public class User {
     return friendIDs;
   }
 
-  public void setFriends(Collection<String> friendIDs) {
+  public void setFriendIDs(Collection<String> friendIDs) {
     this.friendIDs = friendIDs;
   }
-
-  //private Collection<String> matchIDs;
 
   public Collection<String> getMatchIDs() {
     return matchIDs;
@@ -144,12 +142,14 @@ public class User {
   public void setTournament2Id(String tournament2Id) {
     this.tournament2Id = tournament2Id;
   }
-}
 
-public String getProfileImageLink(){
+  public String getProfileImageLink(){
     return profileImageLink;
+  }
+
+  public void setProfileImageLink(String profileImageLink) {
+    this.profileImageLink = profileImageLink;
+  }
 }
 
-public void setProfileImageLink(String profileImageLink) {
-    this.profileImageLink = profileImageLink;
-}
+

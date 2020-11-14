@@ -124,7 +124,7 @@ public class LoginController {
     user.setUserId(id);
     user.setProfileImageLink("none");
     user.setPassword(result);
-    user.setFriends(friendIDs);
+    user.setFriendIDs(friendIDs);
     user.setAnnouncementIDs(announcementIDs);
     user.setMatchIDs(matchIDs);
     user.setTournament1Id("none");
