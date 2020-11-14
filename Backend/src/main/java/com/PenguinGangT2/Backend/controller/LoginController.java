@@ -76,6 +76,8 @@ public class LoginController {
 
     @PostMapping("signup")
     public ResponseEntity<?> registerUser(@RequestBody User user){
+        Map hashmap = new HashMap();
+
         if(userRepo.existsByUsername(user.getUsername())){
             return ResponseEntity.badRequest().body("Error: Username is already taken!");
         }
@@ -98,7 +100,7 @@ public class LoginController {
         user.setAccountPoints(0);
 
         userRepo.save(user);
-
-        return ResponseEntity.ok("User registered!");
+        hashmap.put("message", "Account has been created!");
+        return ResponseEntity.ok().body(hashmap);
     }
 }
