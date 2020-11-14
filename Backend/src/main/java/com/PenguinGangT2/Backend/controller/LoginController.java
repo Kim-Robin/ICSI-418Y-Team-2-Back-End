@@ -75,7 +75,8 @@ public class LoginController {
         userMap.put("friendIDs", user.getFriendIDs());
         userMap.put("announcementIDs", user.getAnnouncementIDs());
         userMap.put("matchIDs", user.getMatchIds());
-        userMap.put("tournament1Id", )
+        userMap.put("tournament1Id", user.getTournament1Id());
+        userMap.put("tournament2Id", user.getTournament2Id());
         userMap.put("accountPoints", user.getAccountPoint());
         returnMap.put("user", userMap);
         return ResponseEntity.ok().body(returnMap);
