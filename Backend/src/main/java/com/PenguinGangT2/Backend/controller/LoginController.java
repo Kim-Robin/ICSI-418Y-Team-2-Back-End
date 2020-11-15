@@ -67,7 +67,7 @@ public class LoginController {
         );
         final String jwt = jwtUtil.generateToken(userDetails);
         returnMap.put("JWTToken", jwt);
-        userMap.put("id", user.getUserId());
+        userMap.put("id", user.getId());
         userMap.put("username", user.getUsername());
         userMap.put("email", user.getEmail());
         userMap.put("firstName", user.getFirstName());
@@ -123,7 +123,7 @@ public class LoginController {
     Collection<String> matchIDs = new ArrayList<>();
     Collection<String> announcementIDs = new ArrayList<>();
 
-    user.setUserId(userId);
+    user.setId(userId);
     user.setProfileImageLink("none");
     user.setPassword(result);
     user.setFriendIDs(friendIDs);

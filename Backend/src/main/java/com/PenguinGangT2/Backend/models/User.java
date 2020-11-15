@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
 
   @Id
-  private String userId;
+  private String id;
 
   @NotBlank
   @Size(max = 30)
@@ -51,12 +51,12 @@ public class User {
 
   private String team2Id;
 
-  public String getUserId() {
-    return userId;
+  public String getId() {
+    return id;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getUsername() {

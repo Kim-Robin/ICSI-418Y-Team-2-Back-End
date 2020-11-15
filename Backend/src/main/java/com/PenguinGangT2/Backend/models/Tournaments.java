@@ -13,16 +13,22 @@ public class Tournaments {
   @Id
   private String id;
 
+  private String hostUserId;
+
+  private String hostUsername;
+
+  private boolean lockedInStatus;
+
+  private boolean publicStatus;
+
   @NotNull
   @Size(max = 100)
   private String tournamentName;
 
-  private Collection<String> registeredUserId;
+  private Collection<String> registeredTeamId;
 
   @NotNull
   private int participantLimit;
-
-  private Date date = new Date();
 
   public String getId() {
     return id;
@@ -30,6 +36,38 @@ public class Tournaments {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getHostUserId() {
+    return hostUserId;
+  }
+
+  public void setHostUserId(String hostUserId) {
+    this.hostUserId = hostUserId;
+  }
+
+  public String getHostUsername() {
+    return hostUsername;
+  }
+
+  public void setHostUsername(String hostUsername) {
+    this.hostUsername = hostUsername;
+  }
+
+  public boolean getLockedInStatus() {
+    return lockedInStatus;
+  }
+
+  public void setLockedInStatus(boolean lockedInStatus) {
+    this.lockedInStatus = lockedInStatus;
+  }
+
+  public boolean getPublicStatus() {
+    return publicStatus;
+  }
+
+  public void setPublicStatus(boolean publicStatus) {
+    this.publicStatus = publicStatus;
   }
 
   public String getTournamentName() {
@@ -40,12 +78,12 @@ public class Tournaments {
     this.tournamentName = tournamentName;
   }
 
-  public Collection<String> getRegisteredUserId() {
-    return registeredUserId;
+  public Collection<String> getRegisteredTeamId() {
+    return registeredTeamId;
   }
 
-  public void setRegisteredTeamId(Collection<String> registeredUserId) {
-    this.registeredUserId = registeredUserId;
+  public void setRegisteredTeamId(Collection<String> registeredTeamId) {
+    this.registeredTeamId = registeredTeamId;
   }
 
   public int getParticipantLimit() {
@@ -54,13 +92,5 @@ public class Tournaments {
 
   public void setParticipantLimit(int participantLimit) {
     this.participantLimit = participantLimit;
-  }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
   }
 }
