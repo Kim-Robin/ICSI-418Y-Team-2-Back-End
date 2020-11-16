@@ -92,7 +92,7 @@ public class User {
   }
 
   public String getPassword() {
-    return username;
+    return password;
   }
 
   public void setPassword(String password) {

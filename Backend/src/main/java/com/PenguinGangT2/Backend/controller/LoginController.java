@@ -81,11 +81,10 @@ public class LoginController {
         userMap.put("team2Id", user.getTeam2Id());
         userMap.put("accountPoints", user.getAccountPoint());
         returnMap.put("user", userMap);
-        return ResponseEntity.ok().body(returnMap);
       } else {
         returnMap.put("error", "Incorrect password");
-        return ResponseEntity.ok().body(returnMap);
       }
+      return ResponseEntity.ok().body(returnMap);
     } else {
       returnMap.put("error", "There is no account with that email Address!");
       return ResponseEntity.ok().body(returnMap);
