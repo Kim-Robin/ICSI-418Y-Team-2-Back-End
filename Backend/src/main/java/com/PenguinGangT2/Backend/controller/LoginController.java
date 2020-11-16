@@ -45,23 +45,16 @@ public class LoginController {
     Map userMap = new HashMap();
     User user;
 
+    StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
+
     if (userRepo.existsByEmail(email)) {
       user =
         userRepo
           .findByEmail(email)
           .orElseThrow(() -> new ResourceNotFoundException());
 
-      if (user.getPassword().equals(password)) {
-        try {
-          authManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-              user.getUsername(),
-              password
-            )
-          );
-        } catch (BadCredentialsException e) {
-          throw new Exception("Could not Authenticate!", e);
-        }
+      if (encoder.matches(password, user.getPassword())) {
+
         final UserDetails userDetails = userDetailsService.loadUserByUsername(
           user.getUsername()
         );
@@ -84,11 +77,10 @@ public class LoginController {
       } else {
         returnMap.put("error", "Incorrect password");
       }
-      return ResponseEntity.ok().body(returnMap);
     } else {
       returnMap.put("error", "There is no account with that email Address!");
-      return ResponseEntity.ok().body(returnMap);
     }
+    return ResponseEntity.ok().body(returnMap);
   }
 
   @PostMapping("/signup")
