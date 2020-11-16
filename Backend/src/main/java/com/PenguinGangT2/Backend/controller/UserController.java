@@ -10,21 +10,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/userInfo")
+@CrossOrigin(origins = "*")
 public class UserController {
 
   @Autowired
   private UserRepository userRepo;
 
-  @GetMapping(value = "/{id}")
+  @GetMapping(value = "/byId/{id}")
   public User getUserById(@PathVariable String id) {
     return userRepo
       .findById(id)
@@ -39,7 +35,35 @@ public class UserController {
       .orElseThrow(() -> new ResourceNotFoundException());
   }
 
-  @PutMapping(value = "/{id}")
+  @PostMapping(value = "/update/{id}")
+  public ResponseEntity<?> updateUserWithId(@RequestBody User user, @PathVariable String id) {
+    Map map = new HashMap();
+
+
+    User original = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+    System.out.println(original);
+    user.setPassword(original.getPassword());
+    user.setId(id);
+
+
+    map.put("id", id);
+    map.put("username", user.getUsername());
+    map.put("email", user.getEmail());
+    map.put("firstName", user.getFirstName());
+    map.put("lastName", user.getLastName());
+    map.put("friendIDs", user.getFriendIDs());
+    map.put("announcementIDs", user.getAnnouncementIDs());
+    map.put("matchIDs", user.getMatchIDs());
+    map.put("tournament1Id", user.getTournament1Id());
+    map.put("tournament2Id", user.getTournament2Id());
+    map.put("team1Id", user.getTeam1Id());
+    map.put("team2Id", user.getTeam2Id());
+    map.put("accountPoints", user.getAccountPoint());
+    userRepo.save(user);
+    return ResponseEntity.ok().body(map);
+  }
+
+  @PostMapping(value = "/{id}")
   public ResponseEntity<?> updateUser(
     @RequestBody User user,
     @PathVariable String id
@@ -47,7 +71,6 @@ public class UserController {
     Optional<User> original = userRepo.findById(id);
     Map userMap = new HashMap();
     if (!original.isPresent()) {
-      userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException());
       userMap.put("error", "User not found!");
       return ResponseEntity.ok().body(userMap);
     }

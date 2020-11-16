@@ -54,7 +54,16 @@ public class LoginController {
           .orElseThrow(() -> new ResourceNotFoundException());
 
       if (encoder.matches(password, user.getPassword())) {
-
+        try {
+          authManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+              user.getUsername(),
+              user.getPassword()
+            )
+          );
+        } catch (BadCredentialsException e) {
+          throw new Exception("Could not Authenticate!", e);
+        }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(
           user.getUsername()
         );
@@ -62,6 +71,7 @@ public class LoginController {
         returnMap.put("JWTToken", jwt);
         userMap.put("id", user.getId());
         userMap.put("username", user.getUsername());
+        userMap.put("password", "hidden");
         userMap.put("email", user.getEmail());
         userMap.put("firstName", user.getFirstName());
         userMap.put("lastName", user.getLastName());
@@ -115,7 +125,6 @@ public class LoginController {
     Collection<String> announcementIDs = new ArrayList<>();
 
     user.setId(userId);
-    user.setProfileImageLink("none");
     user.setPassword(result);
     user.setFriendIDs(friendIDs);
     user.setAnnouncementIDs(announcementIDs);

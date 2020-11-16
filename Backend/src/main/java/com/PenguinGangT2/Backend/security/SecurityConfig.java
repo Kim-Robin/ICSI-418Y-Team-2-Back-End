@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //     .formLogin()
         //     .loginPage("/login")
         //     .permitAll();
+        http.cors();
     }
 
     @Override

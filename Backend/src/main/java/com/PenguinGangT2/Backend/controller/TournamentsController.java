@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tournaments")
+@CrossOrigin(origins = "*")
 public class TournamentsController {
 
   @Autowired
@@ -35,6 +36,7 @@ public class TournamentsController {
   public Tournaments postTournaments(
     @Valid @RequestBody Tournaments tournaments
   ) {
+
     return tournamentsRepo.save(tournaments);
   }
 

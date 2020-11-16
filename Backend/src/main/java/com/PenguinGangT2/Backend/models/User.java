@@ -35,8 +35,6 @@ public class User {
   @NotBlank
   private int accountPoints;
 
-  private String profileImageLink;
-
   private Collection<String> friendIDs;
 
   private Collection<String> matchIDs;
@@ -145,14 +143,6 @@ public class User {
 
   public void setTournament2Id(String tournament2Id) {
     this.tournament2Id = tournament2Id;
-  }
-
-  public String getProfileImageLink() {
-    return profileImageLink;
-  }
-
-  public void setProfileImageLink(String profileImageLink) {
-    this.profileImageLink = profileImageLink;
   }
 
   public String getTeam1Id() {
