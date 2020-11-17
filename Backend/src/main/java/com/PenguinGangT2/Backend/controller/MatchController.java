@@ -32,12 +32,12 @@ public class MatchController {
   }
 
   @GetMapping(value = "/tournament/{tournamentId}")
-  public List<Match> getMatchesByTournamentId(
+  public Collection<Match> getMatchesByTournamentId(
     @PathVariable String tournamentId
   ) {
     List<Match> matchList = new ArrayList<>();
     matchList = matchRepo.findAll();
-    List<Match> matches = new ArrayList<>();
+    Collection<Match> matches = new ArrayList<>();
 
     for (int i = 0; i < matchList.size(); i++) {
       if (matchList.get(i).getTournamentId().equals(tournamentId)) {

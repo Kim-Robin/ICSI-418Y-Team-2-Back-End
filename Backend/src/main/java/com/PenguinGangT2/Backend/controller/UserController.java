@@ -4,6 +4,7 @@ import com.PenguinGangT2.Backend.exception.ResourceNotFoundException;
 import com.PenguinGangT2.Backend.models.User;
 import com.PenguinGangT2.Backend.repository.UserRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -19,6 +20,12 @@ public class UserController {
 
   @Autowired
   private UserRepository userRepo;
+
+  @GetMapping
+  public Collection<User> getAllUsers(){
+
+    return userRepo.findAll();
+  }
 
   @GetMapping(value = "/byId/{id}")
   public User getUserById(@PathVariable String id) {

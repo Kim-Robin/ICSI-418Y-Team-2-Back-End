@@ -22,6 +22,8 @@ public class Team {
 
   private int totalPoints;
 
+  private String tourId;
+
   public String getId() {
     return id;
   }
@@ -61,4 +63,10 @@ public class Team {
   public void setTotalPoints(int totalPoints) {
     this.totalPoints = totalPoints;
   }
+
+  public String getTourId(){ return tourId; }
+
+  public void setTourId(String tourId){ this.tourId = tourId;}
+
+
 }

@@ -3,7 +3,10 @@ package com.PenguinGangT2.Backend.controller;
 import com.PenguinGangT2.Backend.exception.ResourceNotFoundException;
 import com.PenguinGangT2.Backend.models.Team;
 import com.PenguinGangT2.Backend.repository.TeamRepository;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +27,24 @@ public class TeamController {
 
   @GetMapping("/getTeam")
   public Team getTeamByUserId(
-    @Valid @RequestParam(name = "userId") String userId
+    @Valid @RequestParam(name = "id") String id
   ) {
     return teamRepo
-      .findByUserId(userId)
+      .findById(id)
       .orElseThrow(() -> new ResourceNotFoundException());
+  }
+
+  @GetMapping("/getTeam/tournament")
+  public Collection<Team> getAllTeamsByTourId(@Valid @RequestParam(name="tournamentId") String tourid) {
+    List<Team> allTeams = new ArrayList();
+    List<Team> returnTeams = new ArrayList();
+
+    for(int i = 0; i < allTeams.size(); i++) {
+      if (allTeams.get(i).getTourId() != null && allTeams.get(i).getTourId().equals(tourid)) {
+        returnTeams.add(allTeams.get(i));
+      }
+    }
+  return returnTeams;
   }
 
   @PostMapping("/createTeam")
