@@ -37,6 +37,8 @@ public class User {
 
   private Collection<String> friendIDs;
 
+  private Collection<String> friendRequestIDs;
+
   private Collection<String> matchIDs;
 
   private Collection<String> announcementIDs;
@@ -111,6 +113,14 @@ public class User {
 
   public void setFriendIDs(Collection<String> friendIDs) {
     this.friendIDs = friendIDs;
+  }
+
+  public Collection<String> getFriendRequestIDs() {
+    return friendRequestIDs;
+  }
+
+  public void setFriendRequestIDs(Collection<String> friendRequestIDs) {
+    this.friendRequestIDs = friendRequestIDs;
   }
 
   public Collection<String> getMatchIDs() {
