@@ -76,6 +76,7 @@ public class LoginController {
         userMap.put("firstName", user.getFirstName());
         userMap.put("lastName", user.getLastName());
         userMap.put("friendIDs", user.getFriendIDs());
+        userMap.put("friendRequestIDs", user.getFriendRequestIDs());
         userMap.put("announcementIDs", user.getAnnouncementIDs());
         userMap.put("matchIDs", user.getMatchIDs());
         userMap.put("tournament1Id", user.getTournament1Id());
@@ -121,12 +122,14 @@ public class LoginController {
     String result = encoder.encode(user.getPassword());
 
     Collection<String> friendIDs = new ArrayList<>();
+    Collection<String> friendRequestIDs = new ArrayList<>();
     Collection<String> matchIDs = new ArrayList<>();
     Collection<String> announcementIDs = new ArrayList<>();
 
     user.setId(userId);
     user.setPassword(result);
     user.setFriendIDs(friendIDs);
+    user.setFriendIDs(friendRequestIDs);
     user.setAnnouncementIDs(announcementIDs);
     user.setMatchIDs(matchIDs);
     user.setTournament1Id("none");
