@@ -87,6 +87,9 @@ public class Player {
     @NotBlank
     private String pf;
 
+    @NotBlank
+    private String rp;
+
     public String getId(){
         return id;
     }
@@ -189,5 +192,9 @@ public class Player {
 
     public String getPf(){
         return pf;
+    }
+
+    public String getRp(){
+        return rp;
     }
 }

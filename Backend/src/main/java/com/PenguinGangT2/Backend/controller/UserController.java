@@ -59,6 +59,7 @@ public class UserController {
     map.put("firstName", user.getFirstName());
     map.put("lastName", user.getLastName());
     map.put("friendIDs", user.getFriendIDs());
+    map.put("friendRequestIDs", user.getFriendRequestIDs());
     map.put("announcementIDs", user.getAnnouncementIDs());
     map.put("matchIDs", user.getMatchIDs());
     map.put("tournament1Id", user.getTournament1Id());
@@ -92,6 +93,7 @@ public class UserController {
     userMap.put("firstName", user.getFirstName());
     userMap.put("lastName", user.getLastName());
     userMap.put("friendIDs", user.getFriendIDs());
+    userMap.put("friendRequestIDs", user.getFriendRequestIDs());
     userMap.put("announcementIDs", user.getAnnouncementIDs());
     userMap.put("matchIDs", user.getMatchIDs());
     userMap.put("tournament1Id", user.getTournament1Id());
