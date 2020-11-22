@@ -78,7 +78,7 @@ public class LoginController {
         userMap.put("friendIDs", user.getFriendIDs());
         userMap.put("friendRequestIDs", user.getFriendRequestIDs());
         userMap.put("announcementIDs", user.getAnnouncementIDs());
-        userMap.put("tournamentRequestIDs", user.getTournamentRequstIDs());
+        userMap.put("tournamentRequestIDs", user.getTournamentRequestIDs());
         userMap.put("tournament1Id", user.getTournament1Id());
         userMap.put("tournament2Id", user.getTournament2Id());
         userMap.put("team1Id", user.getTeam1Id());
@@ -121,11 +121,11 @@ public class LoginController {
     StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
     String result = encoder.encode(user.getPassword());
 
-    Collection<String> friendIDs = new ArrayList<>();
-    Collection<String> friendRequestIDs = new ArrayList<>();
-    Collection<String> matchIDs = new ArrayList<>();
-    Collection<String> announcementIDs = new ArrayList<>();
-    Collection<String> tournamentRequestIds = new ArrayList<>();
+    ArrayList<String> friendIDs = new ArrayList<>();
+    ArrayList<String> friendRequestIDs = new ArrayList<>();
+    ArrayList<String> matchIDs = new ArrayList<>();
+    ArrayList<String> announcementIDs = new ArrayList<>();
+    ArrayList<String> tournamentRequestIds = new ArrayList<>();
 
 
     user.setId(userId);
@@ -133,7 +133,7 @@ public class LoginController {
     user.setFriendIDs(friendIDs);
     user.setFriendRequestIDs(friendRequestIDs);
     user.setAnnouncementIDs(announcementIDs);
-    user.setTournamentRequstIDs(tournamentRequestIds);
+    user.setTournamentRequestIDs(tournamentRequestIds);
     user.setTournament1Id("none");
     user.setTournament2Id("none");
     user.setTeam1Id("none");

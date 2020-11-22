@@ -61,7 +61,7 @@ public class UserController {
     map.put("friendIDs", user.getFriendIDs());
     map.put("friendRequestIDs", user.getFriendRequestIDs());
     map.put("announcementIDs", user.getAnnouncementIDs());
-    map.put("tournamentRequestIDs", user.getTournamentRequstIDs());
+    map.put("tournamentRequestIDs", user.getTournamentRequestIDs());
     map.put("tournament1Id", user.getTournament1Id());
     map.put("tournament2Id", user.getTournament2Id());
     map.put("team1Id", user.getTeam1Id());
@@ -96,7 +96,7 @@ public class UserController {
     userMap.put("friendIDs", user.getFriendIDs());
     userMap.put("friendRequestIDs", user.getFriendRequestIDs());
     userMap.put("announcementIDs", user.getAnnouncementIDs());
-    userMap.put("tournamentRequestIDs", user.getTournamentRequstIDs());
+    userMap.put("tournamentRequestIDs", user.getTournamentRequestIDs());
     userMap.put("tournament1Id", user.getTournament1Id());
     userMap.put("tournament2Id", user.getTournament2Id());
     userMap.put("team1Id", user.getTeam1Id());
