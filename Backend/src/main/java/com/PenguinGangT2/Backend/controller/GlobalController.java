@@ -8,7 +8,6 @@ import com.PenguinGangT2.Backend.repository.TeamRepository;
 import com.PenguinGangT2.Backend.repository.TournamentsRepository;
 import com.PenguinGangT2.Backend.repository.UserRepository;
 import io.jsonwebtoken.Header;
-
 import java.nio.file.Path;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,208 @@ public class GlobalController {
   @Autowired
   private TournamentsRepository tournamentRepo;
 
+  @PostMapping(value = "/action/kickFromTournament/{tournamentId}/{userId}")
+  public ResponseEntity<?> kickUserFromTournament(
+    @PathVariable String tournamentId,
+    @PathVariable String userId
+  ) {
+    User user = userRepo
+      .findById(userId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+
+    Tournaments tournament = tournamentRepo
+      .findById(tournamentId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+
+    if (user.getTournament1Id().equals(tournamentId)) {
+      user.setTournament1Id("none");
+    } else {
+      user.setTournament2Id("none");
+    }
+
+    ArrayList<String> userIdsTournament = new ArrayList();
+    userIdsTournament.addAll(tournament.getRegisteredUserId());
+    int indexOfUserId = userIdsTournament.indexOf(userId);
+    userIdsTournament.remove(indexOfUserId);
+    tournament.setRegisteredUserId(userIdsTournament);
+
+    userRepo.save(user);
+    tournamentRepo.save(tournament);
+    return ResponseEntity.ok().body("Successfully kicked player!");
+  }
+
+  @PostMapping(value = "/action/handleTournamentInvite/{status}")
+  public ResponseEntity<?> handleTournamentInvite(
+    @PathVariable String status,
+    @RequestParam(name = "userId") String userId,
+    @RequestParam(name = "tournamentId") String tournamentId
+  ) {
+    User user = userRepo
+      .findById(userId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+    Tournaments tournament = tournamentRepo
+      .findById(tournamentId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+
+    if (status.equals("accept")) {
+      ArrayList<String> listOfTournamentRequestIds = new ArrayList();
+      listOfTournamentRequestIds.addAll(user.getTournamentRequstIDs());
+      int indexOfTournamentRequest = listOfTournamentRequestIds.indexOf(
+        tournamentId
+      );
+      listOfTournamentRequestIds.remove(indexOfTournamentRequest);
+      user.setTournamentRequstIDs(listOfTournamentRequestIds);
+
+      if (user.getTournament1Id().equals("none")) {
+        user.setTournament1Id(tournamentId);
+      } else if (user.getTournament2Id().equals("none")) {
+        user.setTournament2Id(tournamentId);
+      }
+
+      ArrayList<String> listOfCurrentUserIds = new ArrayList();
+      listOfCurrentUserIds.addAll(tournament.getRegisteredUserId());
+      listOfCurrentUserIds.add(userId);
+      tournament.setRegisteredUserId(listOfCurrentUserIds);
+      tournamentRepo.save(tournament);
+    } else {
+      ArrayList<String> listOfTournamentRequestIds = new ArrayList();
+      listOfTournamentRequestIds.addAll(user.getTournamentRequstIDs());
+      int indexOfTournamentRequest = listOfTournamentRequestIds.indexOf(
+        tournamentId
+      );
+      listOfTournamentRequestIds.remove(indexOfTournamentRequest);
+      user.setTournamentRequstIDs(listOfTournamentRequestIds);
+    }
+
+    userRepo.save(user);
+    tournamentRepo.save(tournament);
+
+    return ResponseEntity.ok().body("Tournament Request Handled!");
+  }
+
+  @PostMapping("/action/TournamentInvite")
+  public ResponseEntity<?> sendTournamentInvite(
+    @RequestParam(name = "receiverId") String receiverId,
+    @RequestParam(name = "tournamentId") String tournamentId
+  ) {
+    User userToReceive = userRepo
+      .findById(receiverId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+
+    ArrayList<String> currentTournamentRequestsList = new ArrayList();
+    currentTournamentRequestsList.addAll(
+      userToReceive.getTournamentRequstIDs()
+    );
+    currentTournamentRequestsList.add(tournamentId);
+    userToReceive.setFriendRequestIDs(currentTournamentRequestsList);
+    userRepo.save(userToReceive);
+    return ResponseEntity.ok().body("Tournament Request Sent!");
+  }
+
+  @PostMapping(value = "/action/handleFriendRequest/{status}")
+  public ResponseEntity<?> dealWithFriendRequest(
+    @PathVariable String status,
+    @RequestParam(name = "senderId") String senderId,
+    @RequestParam(name = "receiverId") String receiverId
+  ) {
+    User senderUser = userRepo
+      .findById(senderId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+    User receiverUser = userRepo
+      .findById(receiverId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+
+    if (status.equals("accept")) {
+      ArrayList<String> senderFriendsList = new ArrayList();
+      senderFriendsList.addAll(senderUser.getFriendIDs());
+      senderFriendsList.add(receiverId);
+      senderUser.setFriendIDs(senderFriendsList);
+      ArrayList<String> receiverFriendRequestList = new ArrayList();
+      ArrayList<String> receiverFriendList = new ArrayList();
+      receiverFriendRequestList.addAll(receiverUser.getFriendRequestIDs());
+      receiverFriendList.addAll(receiverUser.getFriendIDs());
+      int indexOfFriendRequest = receiverFriendRequestList.indexOf(senderId);
+      receiverFriendRequestList.remove(indexOfFriendRequest);
+      receiverFriendList.add(senderId);
+      receiverUser.setFriendIDs(receiverFriendList);
+      receiverUser.setFriendRequestIDs(receiverFriendRequestList);
+    } else {
+      ArrayList<String> receiverFriendRequestList = new ArrayList();
+      receiverFriendRequestList.addAll(receiverUser.getFriendRequestIDs());
+      int indexOfFriendRequest = receiverFriendRequestList.indexOf(senderId);
+      receiverFriendRequestList.remove(indexOfFriendRequest);
+      receiverUser.setFriendRequestIDs(receiverFriendRequestList);
+    }
+
+    userRepo.save(senderUser);
+    userRepo.save(receiverUser);
+
+    return ResponseEntity.ok().body("Friend Request Handled!");
+  }
+
+  @PostMapping("/action/sendFriendRequest")
+  public ResponseEntity<?> sendFriendRequest(
+    @RequestParam(name = "senderId") String senderId,
+    @RequestParam(name = "receiverId") String receiverId
+  ) {
+    User userToReceive = userRepo
+      .findById(receiverId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+
+    ArrayList<String> currentFriendRequestsList = new ArrayList();
+    currentFriendRequestsList.addAll(userToReceive.getFriendRequestIDs());
+    currentFriendRequestsList.add(senderId);
+    userToReceive.setFriendRequestIDs(currentFriendRequestsList);
+    userRepo.save(userToReceive);
+    return ResponseEntity.ok().body("Friend Request Sent!");
+  }
+
+  @GetMapping("/action/getPublicTournamentList")
+  public ResponseEntity<?> getAllPublicTournaments() {
+    Map map = new HashMap();
+
+    List<Tournaments> allTours = new ArrayList();
+    allTours = tournamentRepo.findAll();
+    List<Tournaments> allPublicTours = new ArrayList();
+
+    for (int i = 0; i < allTours.size(); i++) {
+      if (allTours.get(i).getPublicStatus() == true) {
+        allPublicTours.add(allTours.get(i));
+      }
+    }
+    map.put("tournaments", allPublicTours);
+
+    return ResponseEntity.ok().body(map);
+  }
+
+  @PostMapping(value = "/action/joinTournament/{tournamentId}/{userId}")
+  public ResponseEntity<?> joinTournament(
+    @PathVariable String tournamentId,
+    @PathVariable String userId
+  ) {
+    User user = userRepo
+      .findById(userId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+    Tournaments tour = tournamentRepo
+      .findById(tournamentId)
+      .orElseThrow(() -> new ResourceNotFoundException());
+    String type = tour.getType();
+
+    if (type.equals("tour1")) {
+      user.setTournament1Id(tournamentId);
+      userRepo.save(user);
+    } else {
+      user.setTournament2Id(tournamentId);
+      userRepo.save(user);
+    }
+    ArrayList<String> newUsers = new ArrayList();
+    newUsers.addAll(tour.getRegisteredUserId());
+    newUsers.add(user.getId());
+    tour.setRegisteredUserId(newUsers);
+    tournamentRepo.save(tour);
+    return ResponseEntity.ok().body("Successfully Joined Tournament!");
+  }
+
   @GetMapping(value = "/action/getMatches/{tournamentId}")
   public ResponseEntity<?> getMatchesByTournamentId(
     @PathVariable String tournamentId
@@ -64,27 +265,37 @@ public class GlobalController {
   }
 
   @PostMapping(value = "/action/leaveTournament/{tournamentId}/{userId}")
-  public ResponseEntity<?> leaveTournament(@PathVariable String tournamentId, @PathVariable String userId) {
-
-    User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException());
+  public ResponseEntity<?> leaveTournament(
+    @PathVariable String tournamentId,
+    @PathVariable String userId
+  ) {
+    User user = userRepo
+      .findById(userId)
+      .orElseThrow(() -> new ResourceNotFoundException());
 
     if (user.getTournament1Id().equals(tournamentId)) {
       user.setTournament1Id("none");
       user.setTeam1Id("none");
+      userRepo.save(user);
     } else {
       user.setTournament2Id("none");
       user.setTeam2Id("none");
+      userRepo.save(user);
     }
 
-    Tournaments tournament = tournamentRepo.findById(tournamentId).orElseThrow(() -> new ResourceNotFoundException());
+    Tournaments tournament = tournamentRepo
+      .findById(tournamentId)
+      .orElseThrow(() -> new ResourceNotFoundException());
 
-    if(tournament.getRegisteredUserId().contains(userId)) {
+    if (tournament.getRegisteredUserId().contains(userId)) {
       ArrayList<String> newUserIds = new ArrayList();
       newUserIds.addAll(tournament.getRegisteredUserId());
       int index = newUserIds.indexOf(userId);
       newUserIds.remove(index);
       tournament.setRegisteredUserId(newUserIds);
+      tournamentRepo.save(tournament);
     }
+
     Map map = new HashMap();
     map.put("message", "Left Tournament Successfully!");
     return ResponseEntity.ok().body(map);
@@ -126,13 +337,11 @@ public class GlobalController {
     List<User> allUsers = new ArrayList<>();
     allUsers = userRepo.findAll();
 
-
     for (int i = 0; i < allUsers.size(); i++) {
       if (allUsers.get(i).getTournament1Id().equals(tournament.getId())) {
         if (allUsers.get(i).getTeam1Id().equals("none")) {
           allUsers.get(i).setTournament1Id("none");
         }
-
       }
 
       if (allUsers.get(i).getTournament2Id().equals(tournament.getId())) {
