@@ -71,9 +71,11 @@ public class GlobalController {
     if (user.getTournament1Id().equals(tournamentId)) {
       user.setTournament1Id("none");
       user.setTeam1Id("none");
+      userRepo.save(user);
     } else {
       user.setTournament2Id("none");
       user.setTeam2Id("none");
+      userRepo.save(user);
     }
 
     Tournaments tournament = tournamentRepo.findById(tournamentId).orElseThrow(() -> new ResourceNotFoundException());
@@ -84,6 +86,7 @@ public class GlobalController {
       int index = newUserIds.indexOf(userId);
       newUserIds.remove(index);
       tournament.setRegisteredUserId(newUserIds);
+      tournamentRepo.save(tournament);
     }
     Map map = new HashMap();
     map.put("message", "Left Tournament Successfully!");
