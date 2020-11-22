@@ -79,6 +79,16 @@ public class GlobalController {
       .findById(tournamentId)
       .orElseThrow(() -> new ResourceNotFoundException());
 
+    if (user.getTournament1Id().equals("none")) {
+      user.setTournament1Id(tournamentId);
+    } else if (user.getTournament2Id().equals("none")) {
+      user.setTournament2Id(tournamentId);
+    } else {
+      Map map = new HashMap();
+      map.put("error", "no free slots");
+      return ResponseEntity.ok().body(map);
+    }
+
     if (status.equals("accept")) {
       ArrayList<String> listOfTournamentRequestIds = new ArrayList();
       listOfTournamentRequestIds.addAll(user.getTournamentRequstIDs());
@@ -88,11 +98,7 @@ public class GlobalController {
       listOfTournamentRequestIds.remove(indexOfTournamentRequest);
       user.setTournamentRequstIDs(listOfTournamentRequestIds);
 
-      if (user.getTournament1Id().equals("none")) {
-        user.setTournament1Id(tournamentId);
-      } else if (user.getTournament2Id().equals("none")) {
-        user.setTournament2Id(tournamentId);
-      }
+
 
       ArrayList<String> listOfCurrentUserIds = new ArrayList();
       listOfCurrentUserIds.addAll(tournament.getRegisteredUserId());
