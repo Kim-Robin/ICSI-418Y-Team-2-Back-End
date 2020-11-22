@@ -39,7 +39,7 @@ public class User {
 
   private Collection<String> friendRequestIDs;
 
-  private Collection<String> matchIDs;
+  private Collection<String> tournamentRequstIDs;
 
   private Collection<String> announcementIDs;
 
@@ -58,6 +58,10 @@ public class User {
   public void setId(String id) {
     this.id = id;
   }
+
+  public Collection<String> getTournamentRequstIDs() { return tournamentRequstIDs; }
+
+  public void setTournamentRequstIDs(Collection<String> tournamentRequstIDs) { this.tournamentRequstIDs = tournamentRequstIDs; }
 
   public String getUsername() {
     return username;
@@ -121,14 +125,6 @@ public class User {
 
   public void setFriendRequestIDs(Collection<String> friendRequestIDs) {
     this.friendRequestIDs = friendRequestIDs;
-  }
-
-  public Collection<String> getMatchIDs() {
-    return matchIDs;
-  }
-
-  public void setMatchIDs(Collection<String> matchIDs) {
-    this.matchIDs = matchIDs;
   }
 
   public Collection<String> getAnnouncementIDs() {

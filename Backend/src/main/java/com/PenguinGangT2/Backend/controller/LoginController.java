@@ -78,7 +78,7 @@ public class LoginController {
         userMap.put("friendIDs", user.getFriendIDs());
         userMap.put("friendRequestIDs", user.getFriendRequestIDs());
         userMap.put("announcementIDs", user.getAnnouncementIDs());
-        userMap.put("matchIDs", user.getMatchIDs());
+        userMap.put("tournamentRequestIDs", user.getTournamentRequstIDs());
         userMap.put("tournament1Id", user.getTournament1Id());
         userMap.put("tournament2Id", user.getTournament2Id());
         userMap.put("team1Id", user.getTeam1Id());
@@ -125,13 +125,15 @@ public class LoginController {
     Collection<String> friendRequestIDs = new ArrayList<>();
     Collection<String> matchIDs = new ArrayList<>();
     Collection<String> announcementIDs = new ArrayList<>();
+    Collection<String> tournamentRequestIds = new ArrayList<>();
+
 
     user.setId(userId);
     user.setPassword(result);
     user.setFriendIDs(friendIDs);
-    user.setFriendIDs(friendRequestIDs);
+    user.setFriendRequestIDs(friendRequestIDs);
     user.setAnnouncementIDs(announcementIDs);
-    user.setMatchIDs(matchIDs);
+    user.setTournamentRequstIDs(tournamentRequestIds);
     user.setTournament1Id("none");
     user.setTournament2Id("none");
     user.setTeam1Id("none");

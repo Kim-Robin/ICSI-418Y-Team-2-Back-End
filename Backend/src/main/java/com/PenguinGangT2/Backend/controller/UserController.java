@@ -46,22 +46,22 @@ public class UserController {
   public ResponseEntity<?> updateUserWithId(@RequestBody User user, @PathVariable String id) {
     Map map = new HashMap();
 
-
     User original = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException());
     System.out.println(original);
     user.setPassword(original.getPassword());
     user.setId(id);
 
 
-    map.put("id", id);
+    map.put("id", user.getId());
     map.put("username", user.getUsername());
+    map.put("password", "hidden");
     map.put("email", user.getEmail());
     map.put("firstName", user.getFirstName());
     map.put("lastName", user.getLastName());
     map.put("friendIDs", user.getFriendIDs());
     map.put("friendRequestIDs", user.getFriendRequestIDs());
     map.put("announcementIDs", user.getAnnouncementIDs());
-    map.put("matchIDs", user.getMatchIDs());
+    map.put("tournamentRequestIDs", user.getTournamentRequstIDs());
     map.put("tournament1Id", user.getTournament1Id());
     map.put("tournament2Id", user.getTournament2Id());
     map.put("team1Id", user.getTeam1Id());
@@ -89,13 +89,14 @@ public class UserController {
 
     userMap.put("id", user.getId());
     userMap.put("username", user.getUsername());
+    userMap.put("password", "hidden");
     userMap.put("email", user.getEmail());
     userMap.put("firstName", user.getFirstName());
     userMap.put("lastName", user.getLastName());
     userMap.put("friendIDs", user.getFriendIDs());
     userMap.put("friendRequestIDs", user.getFriendRequestIDs());
     userMap.put("announcementIDs", user.getAnnouncementIDs());
-    userMap.put("matchIDs", user.getMatchIDs());
+    userMap.put("tournamentRequestIDs", user.getTournamentRequstIDs());
     userMap.put("tournament1Id", user.getTournament1Id());
     userMap.put("tournament2Id", user.getTournament2Id());
     userMap.put("team1Id", user.getTeam1Id());

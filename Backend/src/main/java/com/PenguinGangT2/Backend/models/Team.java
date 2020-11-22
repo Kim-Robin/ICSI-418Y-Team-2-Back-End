@@ -16,13 +16,16 @@ public class Team {
   private String userId;
 
   @NotNull
+  private String tourId;
+
+  @NotNull
   private Collection<String> playerIdList;
 
+  @NotNull
   private int power;
 
+  @NotNull
   private int totalPoints;
-
-  private String tourId;
 
   public String getId() {
     return id;
@@ -64,9 +67,11 @@ public class Team {
     this.totalPoints = totalPoints;
   }
 
-  public String getTourId(){ return tourId; }
+  public String getTourId() {
+    return tourId;
+  }
 
-  public void setTourId(String tourId){ this.tourId = tourId;}
-
-
+  public void setTourId(String tourId) {
+    this.tourId = tourId;
+  }
 }
