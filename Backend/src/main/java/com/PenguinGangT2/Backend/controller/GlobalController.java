@@ -8,6 +8,8 @@ import com.PenguinGangT2.Backend.repository.TeamRepository;
 import com.PenguinGangT2.Backend.repository.TournamentsRepository;
 import com.PenguinGangT2.Backend.repository.UserRepository;
 import io.jsonwebtoken.Header;
+
+import java.nio.file.Path;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +63,33 @@ public class GlobalController {
     return ResponseEntity.ok().body(returnMap);
   }
 
+  @PostMapping(value = "/action/leaveTournament/{tournamentId}/{userId}")
+  public ResponseEntity<?> leaveTournament(@PathVariable String tournamentId, @PathVariable String userId) {
+
+    User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException());
+
+    if (user.getTournament1Id().equals(tournamentId)) {
+      user.setTournament1Id("none");
+      user.setTeam1Id("none");
+    } else {
+      user.setTournament2Id("none");
+      user.setTeam2Id("none");
+    }
+
+    Tournaments tournament = tournamentRepo.findById(tournamentId).orElseThrow(() -> new ResourceNotFoundException());
+
+    if(tournament.getRegisteredUserId().contains(userId)) {
+      ArrayList<String> newUserIds = new ArrayList();
+      newUserIds.addAll(tournament.getRegisteredUserId());
+      int index = newUserIds.indexOf(userId);
+      newUserIds.remove(index);
+      tournament.setRegisteredUserId(newUserIds);
+    }
+    Map map = new HashMap();
+    map.put("message", "Left Tournament Successfully!");
+    return ResponseEntity.ok().body(map);
+  }
+
   @PostMapping(value = "/action/lockInTournament/{tournamentId}")
   public ResponseEntity<?> lockInTournament(
     @RequestBody Tournaments tournament
@@ -91,6 +120,25 @@ public class GlobalController {
             .findById(listOfTeams.get(i).getUserId())
             .orElseThrow(() -> new ResourceNotFoundException())
         );
+      }
+    }
+
+    List<User> allUsers = new ArrayList<>();
+    allUsers = userRepo.findAll();
+
+
+    for (int i = 0; i < allUsers.size(); i++) {
+      if (allUsers.get(i).getTournament1Id().equals(tournament.getId())) {
+        if (allUsers.get(i).getTeam1Id().equals("none")) {
+          allUsers.get(i).setTournament1Id("none");
+        }
+
+      }
+
+      if (allUsers.get(i).getTournament2Id().equals(tournament.getId())) {
+        if (allUsers.get(i).getTeam2Id().equals("none")) {
+          allUsers.get(i).setTournament2Id("none");
+        }
       }
     }
 
