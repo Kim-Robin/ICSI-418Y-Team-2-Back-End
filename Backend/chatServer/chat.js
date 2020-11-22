@@ -19,6 +19,15 @@ io.on("connection", (client) => {
       receiver: payload.receiver,
     });
   });
+
+  client.on("send tour", (payload) => {
+    io.emit("tour message", {
+      sender: payload.user,
+      date: new Date().toISOString(),
+      text: payload.message,
+      tournament: payload.tournamentID
+    });
+  });
 });
 server.listen(3001, () => {
   console.log("Listening on port 3001");
