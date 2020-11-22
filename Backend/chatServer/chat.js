@@ -25,7 +25,7 @@ io.on("connection", (client) => {
       sender: payload.user,
       date: new Date().toISOString(),
       text: payload.message,
-      tournament: payload.tournamentID
+      tournamentID: payload.tournamentID
     });
   });
 });
