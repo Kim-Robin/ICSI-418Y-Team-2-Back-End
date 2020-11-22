@@ -78,7 +78,7 @@ public class LoginController {
         userMap.put("friendIDs", user.getFriendIDs());
         userMap.put("friendRequestIDs", user.getFriendRequestIDs());
         userMap.put("announcementIDs", user.getAnnouncementIDs());
-        userMap.put("tournamentRequestIDs", user.getTournamentRequstIDs());
+        userMap.put("tournamentRequestIDs", user.getTournamentRequestIDs());
         userMap.put("tournament1Id", user.getTournament1Id());
         userMap.put("tournament2Id", user.getTournament2Id());
         userMap.put("team1Id", user.getTeam1Id());
@@ -133,7 +133,7 @@ public class LoginController {
     user.setFriendIDs(friendIDs);
     user.setFriendRequestIDs(friendRequestIDs);
     user.setAnnouncementIDs(announcementIDs);
-    user.setTournamentRequstIDs(tournamentRequestIds);
+    user.setTournamentRequestIDs(tournamentRequestIds);
     user.setTournament1Id("none");
     user.setTournament2Id("none");
     user.setTeam1Id("none");

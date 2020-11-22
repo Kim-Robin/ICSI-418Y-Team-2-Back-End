@@ -40,7 +40,7 @@ public class User {
 
   private ArrayList<String> friendRequestIDs;
 
-  private ArrayList<String> tournamentRequstIDs;
+  private ArrayList<String> tournamentRequestIDs;
 
   private ArrayList<String> announcementIDs;
 
@@ -60,9 +60,9 @@ public class User {
     this.id = id;
   }
 
-  public ArrayList<String> getTournamentRequstIDs() { return tournamentRequstIDs; }
+  public ArrayList<String> getTournamentRequestIDs() { return tournamentRequestIDs; }
 
-  public void setTournamentRequstIDs(ArrayList<String> tournamentRequstIDs) { this.tournamentRequstIDs = tournamentRequstIDs; }
+  public void setTournamentRequestIDs(ArrayList<String> tournamentRequstIDs) { this.tournamentRequestIDs = tournamentRequstIDs; }
 
   public String getUsername() {
     return username;

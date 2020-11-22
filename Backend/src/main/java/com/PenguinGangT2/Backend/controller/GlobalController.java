@@ -91,12 +91,12 @@ public class GlobalController {
 
     if (status.equals("accept")) {
       ArrayList<String> listOfTournamentRequestIds = new ArrayList();
-      listOfTournamentRequestIds.addAll(user.getTournamentRequstIDs());
+      listOfTournamentRequestIds.addAll(user.getTournamentRequestIDs());
       int indexOfTournamentRequest = listOfTournamentRequestIds.indexOf(
         tournamentId
       );
       listOfTournamentRequestIds.remove(indexOfTournamentRequest);
-      user.setTournamentRequstIDs(listOfTournamentRequestIds);
+      user.setTournamentRequestIDs(listOfTournamentRequestIds);
 
 
 
@@ -107,12 +107,12 @@ public class GlobalController {
       tournamentRepo.save(tournament);
     } else {
       ArrayList<String> listOfTournamentRequestIds = new ArrayList();
-      listOfTournamentRequestIds.addAll(user.getTournamentRequstIDs());
+      listOfTournamentRequestIds.addAll(user.getTournamentRequestIDs());
       int indexOfTournamentRequest = listOfTournamentRequestIds.indexOf(
         tournamentId
       );
       listOfTournamentRequestIds.remove(indexOfTournamentRequest);
-      user.setTournamentRequstIDs(listOfTournamentRequestIds);
+      user.setTournamentRequestIDs(listOfTournamentRequestIds);
     }
 
     userRepo.save(user);
@@ -132,7 +132,7 @@ public class GlobalController {
 
     ArrayList<String> currentTournamentRequestsList = new ArrayList();
     currentTournamentRequestsList.addAll(
-      userToReceive.getTournamentRequstIDs()
+      userToReceive.getTournamentRequestIDs()
     );
     currentTournamentRequestsList.add(tournamentId);
     userToReceive.setFriendRequestIDs(currentTournamentRequestsList);
@@ -425,7 +425,7 @@ public class GlobalController {
     userMap.put("friendIDs", myUser.getFriendIDs());
     userMap.put("friendRequestIDs", myUser.getFriendRequestIDs());
     userMap.put("announcementIDs", myUser.getAnnouncementIDs());
-    userMap.put("tournamentRequestIDs", myUser.getTournamentRequstIDs());
+    userMap.put("tournamentRequestIDs", myUser.getTournamentRequestIDs());
     userMap.put("tournament1Id", myUser.getTournament1Id());
     userMap.put("tournament2Id", myUser.getTournament2Id());
     userMap.put("team1Id", myUser.getTeam1Id());
@@ -439,9 +439,9 @@ public class GlobalController {
     Map friendRequestUserData = new HashMap();
     Map friendUserData = new HashMap();
 
-    for(int i = 0; i < myUser.getTournamentRequstIDs().size(); i++) {
+    for(int i = 0; i < myUser.getTournamentRequestIDs().size(); i++) {
       Tournaments tournament = new Tournaments();
-      tournament = tournamentRepo.findById(myUser.getTournamentRequstIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+      tournament = tournamentRepo.findById(myUser.getTournamentRequestIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
     }
     returnMap.put("tournamentRequestData", tournamentRequestList);
 
@@ -459,7 +459,7 @@ public class GlobalController {
       friendUserData.put("friendIDs", user.getFriendIDs());
       friendUserData.put("friendRequestIDs", user.getFriendRequestIDs());
       friendUserData.put("announcementIDs", user.getAnnouncementIDs());
-      friendUserData.put("tournamentRequestIDs", user.getTournamentRequstIDs());
+      friendUserData.put("tournamentRequestIDs", user.getTournamentRequestIDs());
       friendUserData.put("tournament1Id", user.getTournament1Id());
       friendUserData.put("tournament2Id", user.getTournament2Id());
       friendUserData.put("team1Id", user.getTeam1Id());
@@ -484,7 +484,7 @@ public class GlobalController {
       friendRequestUserData.put("friendIDs", user.getFriendIDs());
       friendRequestUserData.put("friendRequestIDs", user.getFriendRequestIDs());
       friendRequestUserData.put("announcementIDs", user.getAnnouncementIDs());
-      friendRequestUserData.put("tournamentRequestIDs", user.getTournamentRequstIDs());
+      friendRequestUserData.put("tournamentRequestIDs", user.getTournamentRequestIDs());
       friendRequestUserData.put("tournament1Id", user.getTournament1Id());
       friendRequestUserData.put("tournament2Id", user.getTournament2Id());
       friendRequestUserData.put("team1Id", user.getTeam1Id());
