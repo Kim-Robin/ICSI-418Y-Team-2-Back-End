@@ -1,5 +1,6 @@
 package com.PenguinGangT2.Backend.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -35,13 +36,13 @@ public class User {
   @NotBlank
   private int accountPoints;
 
-  private Collection<String> friendIDs;
+  private ArrayList<String> friendIDs;
 
-  private Collection<String> friendRequestIDs;
+  private ArrayList<String> friendRequestIDs;
 
-  private Collection<String> tournamentRequstIDs;
+  private ArrayList<String> tournamentRequstIDs;
 
-  private Collection<String> announcementIDs;
+  private ArrayList<String> announcementIDs;
 
   private String tournament1Id;
 
@@ -59,9 +60,9 @@ public class User {
     this.id = id;
   }
 
-  public Collection<String> getTournamentRequstIDs() { return tournamentRequstIDs; }
+  public ArrayList<String> getTournamentRequstIDs() { return tournamentRequstIDs; }
 
-  public void setTournamentRequstIDs(Collection<String> tournamentRequstIDs) { this.tournamentRequstIDs = tournamentRequstIDs; }
+  public void setTournamentRequstIDs(ArrayList<String> tournamentRequstIDs) { this.tournamentRequstIDs = tournamentRequstIDs; }
 
   public String getUsername() {
     return username;
@@ -111,27 +112,27 @@ public class User {
     this.accountPoints = accountPoints;
   }
 
-  public Collection<String> getFriendIDs() {
+  public ArrayList<String> getFriendIDs() {
     return friendIDs;
   }
 
-  public void setFriendIDs(Collection<String> friendIDs) {
+  public void setFriendIDs(ArrayList<String> friendIDs) {
     this.friendIDs = friendIDs;
   }
 
-  public Collection<String> getFriendRequestIDs() {
+  public ArrayList<String> getFriendRequestIDs() {
     return friendRequestIDs;
   }
 
-  public void setFriendRequestIDs(Collection<String> friendRequestIDs) {
+  public void setFriendRequestIDs(ArrayList<String> friendRequestIDs) {
     this.friendRequestIDs = friendRequestIDs;
   }
 
-  public Collection<String> getAnnouncementIDs() {
+  public ArrayList<String> getAnnouncementIDs() {
     return announcementIDs;
   }
 
-  public void setAnnouncementIDs(Collection<String> announcementIDs) {
+  public void setAnnouncementIDs(ArrayList<String> announcementIDs) {
     this.announcementIDs = announcementIDs;
   }
 

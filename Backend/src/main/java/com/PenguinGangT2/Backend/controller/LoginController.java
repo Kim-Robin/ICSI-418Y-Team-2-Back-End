@@ -121,11 +121,11 @@ public class LoginController {
     StandardPasswordEncoder encoder = new StandardPasswordEncoder("secret");
     String result = encoder.encode(user.getPassword());
 
-    Collection<String> friendIDs = new ArrayList<>();
-    Collection<String> friendRequestIDs = new ArrayList<>();
-    Collection<String> matchIDs = new ArrayList<>();
-    Collection<String> announcementIDs = new ArrayList<>();
-    Collection<String> tournamentRequestIds = new ArrayList<>();
+    ArrayList<String> friendIDs = new ArrayList<>();
+    ArrayList<String> friendRequestIDs = new ArrayList<>();
+    ArrayList<String> matchIDs = new ArrayList<>();
+    ArrayList<String> announcementIDs = new ArrayList<>();
+    ArrayList<String> tournamentRequestIds = new ArrayList<>();
 
 
     user.setId(userId);

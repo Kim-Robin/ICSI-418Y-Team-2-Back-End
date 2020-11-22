@@ -433,6 +433,67 @@ public class GlobalController {
     userMap.put("accountPoints", myUser.getAccountPoint());
     returnMap.put("user", userMap);
 
+    List friendRequestuserList = new ArrayList();
+    List friendUserList = new ArrayList();
+    List tournamentRequestList = new ArrayList();
+    Map friendRequestUserData = new HashMap();
+    Map friendUserData = new HashMap();
+
+    for(int i = 0; i < myUser.getTournamentRequstIDs().size(); i++) {
+      Tournaments tournament = new Tournaments();
+      tournament = tournamentRepo.findById(myUser.getTournamentRequstIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+    }
+    returnMap.put("tournamentRequestData", tournamentRequestList);
+
+    for(int i = 0; i < myUser.getFriendIDs().size(); i++) {
+
+      User user = new User();
+      user = userRepo.findById(myUser.getFriendIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+
+      friendUserData.put("id", user.getId());
+      friendUserData.put("username", user.getUsername());
+      friendUserData.put("password", "hidden");
+      friendUserData.put("email", user.getEmail());
+      friendUserData.put("firstName", user.getFirstName());
+      friendUserData.put("lastName", user.getLastName());
+      friendUserData.put("friendIDs", user.getFriendIDs());
+      friendUserData.put("friendRequestIDs", user.getFriendRequestIDs());
+      friendUserData.put("announcementIDs", user.getAnnouncementIDs());
+      friendUserData.put("tournamentRequestIDs", user.getTournamentRequstIDs());
+      friendUserData.put("tournament1Id", user.getTournament1Id());
+      friendUserData.put("tournament2Id", user.getTournament2Id());
+      friendUserData.put("team1Id", user.getTeam1Id());
+      friendUserData.put("team2Id", user.getTeam2Id());
+      friendUserData.put("accountPoints", user.getAccountPoint());
+      friendUserList.add(friendUserData);
+    }
+    returnMap.put("friendListUserData", friendUserList);
+
+
+    for(int i = 0; i < myUser.getFriendRequestIDs().size(); i++) {
+
+      User user = new User();
+      user = userRepo.findById(myUser.getFriendRequestIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+
+      friendRequestUserData.put("id", user.getId());
+      friendRequestUserData.put("username", user.getUsername());
+      friendRequestUserData.put("password", "hidden");
+      friendRequestUserData.put("email", user.getEmail());
+      friendRequestUserData.put("firstName", user.getFirstName());
+      friendRequestUserData.put("lastName", user.getLastName());
+      friendRequestUserData.put("friendIDs", user.getFriendIDs());
+      friendRequestUserData.put("friendRequestIDs", user.getFriendRequestIDs());
+      friendRequestUserData.put("announcementIDs", user.getAnnouncementIDs());
+      friendRequestUserData.put("tournamentRequestIDs", user.getTournamentRequstIDs());
+      friendRequestUserData.put("tournament1Id", user.getTournament1Id());
+      friendRequestUserData.put("tournament2Id", user.getTournament2Id());
+      friendRequestUserData.put("team1Id", user.getTeam1Id());
+      friendRequestUserData.put("team2Id", user.getTeam2Id());
+      friendRequestUserData.put("accountPoints", user.getAccountPoint());
+      friendRequestuserList.add(friendRequestUserData);
+    }
+    returnMap.put("friendRequestUserData", friendRequestuserList);
+
     if (!tour1Id.equals("none")) {
       tour1 =
         tournamentRepo
