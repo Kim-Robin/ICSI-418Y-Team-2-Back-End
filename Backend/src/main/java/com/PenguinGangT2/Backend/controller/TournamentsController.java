@@ -36,7 +36,6 @@ public class TournamentsController {
   public Tournaments postTournaments(
     @Valid @RequestBody Tournaments tournaments
   ) {
-
     return tournamentsRepo.save(tournaments);
   }
 
