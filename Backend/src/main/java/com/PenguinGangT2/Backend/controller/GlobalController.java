@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/global")
 @CrossOrigin(origins = "*")
@@ -35,6 +37,28 @@ public class GlobalController {
 
   @Autowired
   private TournamentsRepository tournamentRepo;
+
+
+  @PostMapping("/action/createTournament")
+  public ResponseEntity<?> createTournament(@Valid @RequestBody Tournaments tournament) {
+
+    String hostId = tournament.getHostUserId();
+    String tourId = tournament.getId();
+
+    User user = userRepo.findById(hostId).orElseThrow(() -> new ResourceNotFoundException());
+    if (user.getTournament1Id().equals("none")) {
+      user.setTournament1Id(tourId);
+      userRepo.save(user);
+      tournamentRepo.save(tournament);
+    } else {
+      user.setTournament2Id(tourId);
+      userRepo.save(user);
+      tournamentRepo.save(tournament);
+    }
+
+    return ResponseEntity.ok().body("Tournament Creation Successful!");
+  }
+
 
   @PostMapping(value = "/action/kickFromTournament/{tournamentId}/{userId}")
   public ResponseEntity<?> kickUserFromTournament(
@@ -227,9 +251,8 @@ public class GlobalController {
     Tournaments tour = tournamentRepo
       .findById(tournamentId)
       .orElseThrow(() -> new ResourceNotFoundException());
-    String type = tour.getType();
 
-    if (type.equals("tour1")) {
+    if (user.getTournament1Id().equals("none")) {
       user.setTournament1Id(tournamentId);
       userRepo.save(user);
     } else {
@@ -433,22 +456,23 @@ public class GlobalController {
     userMap.put("accountPoints", myUser.getAccountPoint());
     returnMap.put("user", userMap);
 
-    List friendRequestuserList = new ArrayList();
-    List friendUserList = new ArrayList();
-    List tournamentRequestList = new ArrayList();
+    ArrayList friendRequestuserList = new ArrayList();
+    ArrayList friendUserList = new ArrayList();
+    ArrayList tournamentRequestList = new ArrayList();
     Map friendRequestUserData = new HashMap();
     Map friendUserData = new HashMap();
 
-    for(int i = 0; i < myUser.getTournamentRequestIDs().size(); i++) {
-      Tournaments tournament = new Tournaments();
-      tournament = tournamentRepo.findById(myUser.getTournamentRequestIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+    if (myUser.getTournamentRequestIDs().size() != 0) {
+      for (int i = 0; i < myUser.getTournamentRequestIDs().size(); i++) {
+        Tournaments tournament = new Tournaments();
+        tournament = tournamentRepo.findById(myUser.getTournamentRequestIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+      }
     }
     returnMap.put("tournamentRequestData", tournamentRequestList);
 
     for(int i = 0; i < myUser.getFriendIDs().size(); i++) {
 
-      User user = new User();
-      user = userRepo.findById(myUser.getFriendIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+      User user = userRepo.findById(myUser.getFriendIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
 
       friendUserData.put("id", user.getId());
       friendUserData.put("username", user.getUsername());
@@ -472,8 +496,7 @@ public class GlobalController {
 
     for(int i = 0; i < myUser.getFriendRequestIDs().size(); i++) {
 
-      User user = new User();
-      user = userRepo.findById(myUser.getFriendRequestIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+      User user = userRepo.findById(myUser.getFriendRequestIDs().get(i)).orElseThrow(() -> new ResourceNotFoundException());
 
       friendRequestUserData.put("id", user.getId());
       friendRequestUserData.put("username", user.getUsername());
@@ -558,7 +581,7 @@ public class GlobalController {
       User myUser = userRepo
         .findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException());
-      if (tournament.getType().equals("tour1")) {
+      if (myUser.getTournament1Id().equals("none")) {
         myUser.setTeam1Id(newTeamId);
       } else {
         myUser.setTeam2Id(newTeamId);

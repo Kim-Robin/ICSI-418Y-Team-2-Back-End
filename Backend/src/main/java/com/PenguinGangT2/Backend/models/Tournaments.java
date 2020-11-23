@@ -24,8 +24,6 @@ public class Tournaments {
 
   private boolean activeStatus;
 
-  private String type;
-
   private ArrayList<String> completedMatchIds;
 
   private ArrayList<String> upcomingMatchIds;
@@ -47,14 +45,6 @@ public class Tournaments {
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 
   public ArrayList<String> getRegisteredUserId() { return registeredUserId; }
