@@ -8,6 +8,8 @@ import com.PenguinGangT2.Backend.repository.TeamRepository;
 import com.PenguinGangT2.Backend.repository.TournamentsRepository;
 import com.PenguinGangT2.Backend.repository.UserRepository;
 import io.jsonwebtoken.Header;
+
+import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,49 @@ public class GlobalController {
   @Autowired
   private TournamentsRepository tournamentRepo;
 
+  @GetMapping(value = "action/getUsersByTournamentId/{tourId}")
+  public ResponseEntity<?> getUsersByTournamentId(@PathVariable String tourId) {
+
+    ArrayList list = new ArrayList();
+    List<User> allUsers = new ArrayList();
+    allUsers = userRepo.findAll();
+    Tournaments tournament = tournamentRepo.findById(tourId).orElseThrow(() -> new ResourceNotFoundException());
+
+    for (int i = 0; i < tournament.getRegisteredUserId().size(); i++) {
+      User newUser = userRepo.findById(tournament.getRegisteredUserId().get(i)).orElseThrow(() -> new ResourceNotFoundException());
+      if (tournament.getRegisteredTeamId().contains(newUser.getTeam1Id())) {
+        Map userTeamMap = new HashMap();
+        userTeamMap.put("teamId", teamRepo.findById(newUser.getTeam1Id()).orElseThrow(() -> new ResourceNotFoundException()));
+        userTeamMap.put("user", newUser);
+        list.add(userTeamMap);
+
+
+      } else if (tournament.getRegisteredTeamId().contains(newUser.getTeam2Id())){
+        Map userTeamMap = new HashMap();
+        userTeamMap.put("teamId", teamRepo.findById(newUser.getTeam2Id()).orElseThrow(() -> new ResourceNotFoundException()));
+        userTeamMap.put("user", newUser);
+        list.add(userTeamMap);
+      }
+    }
+
+    return ResponseEntity.ok().body(list);
+  }
+
+  @GetMapping("/action/getAnnouncements/{userId}")
+  public ResponseEntity<?> getAnnouncementsByUserId(@PathVariable String userId) {
+
+    ArrayList<Announcement> announcements = new ArrayList();
+
+    List<Announcement> allAnnouncements = announcementRepo.findAll();
+
+    for (int i = 0; i < allAnnouncements.size(); i++) {
+      if (allAnnouncements.get(i).getUserId().equals(userId)) {
+        announcements.add(allAnnouncements.get(i));
+      }
+    }
+
+    return ResponseEntity.ok().body(announcements);
+  }
 
   @PostMapping("/action/createTournament")
   public ResponseEntity<?> createTournament(@Valid @RequestBody Tournaments tournament) {
@@ -224,8 +269,6 @@ public class GlobalController {
 
   @GetMapping("/action/getPublicTournamentList")
   public ResponseEntity<?> getAllPublicTournaments() {
-    Map map = new HashMap();
-
     List<Tournaments> allTours = new ArrayList();
     allTours = tournamentRepo.findAll();
     List<Tournaments> allPublicTours = new ArrayList();
@@ -235,9 +278,8 @@ public class GlobalController {
         allPublicTours.add(allTours.get(i));
       }
     }
-    map.put("tournaments", allPublicTours);
 
-    return ResponseEntity.ok().body(map);
+    return ResponseEntity.ok().body(allPublicTours);
   }
 
   @PostMapping(value = "/action/joinTournament/{tournamentId}/{userId}")
@@ -578,6 +620,7 @@ public class GlobalController {
       newRegisteredTeamId.add(newTeamId);
       tournament.setRegisteredTeamId(newRegisteredTeamId);
 
+      /*
       User myUser = userRepo
         .findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException());
@@ -586,6 +629,8 @@ public class GlobalController {
       } else {
         myUser.setTeam2Id(newTeamId);
       }
+      */
+
       responseMap.put("message", "Successfully created team!");
     } catch (Exception e) {
       responseMap.put("error", "Could not create team!");
