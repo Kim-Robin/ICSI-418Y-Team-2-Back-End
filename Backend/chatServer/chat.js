@@ -22,10 +22,10 @@ io.on("connection", (client) => {
 
   client.on("send tour", (payload) => {
     io.emit("tour message", {
-      sender: payload.user,
+      user: payload.user,
       date: new Date().toISOString(),
       text: payload.message,
-      tournamentID: payload.tournamentID
+      tournamentID: payload.tournamentID,
     });
   });
 });
